@@ -1,12 +1,12 @@
 # Arylic32
 
-An ESP32 based remote for Arylic whole home audio systems.
+An ESP32 based remote for [Arylic](https://www.arylic.com/) whole home audio systems.
 
 ## About
 
 Designed for low-power ESP32's, the firmware spends most of it's time in a deep sleep state.
 
-Press the center button to wake the device which will then connect to WiFi.
+Press the center button to wake the device which will then connect to WiFi. After a period of inactivity, 15 seconds, the device will go back to sleep.
 
 There are 5 buttons currently supported:
 
@@ -18,7 +18,7 @@ There are 5 buttons currently supported:
 
 ## Setup
 
-WiFi and target device configuration must currently be set at build time. These variables must be modified at the top of [Arylic32.cpp](Arylic32.cpp).
+WiFi and target device configuration must currently be set at build time. These variables must be modified at the top of [Arylic32.cpp](firmware/Arylic32.cpp).
 
-Pins are Active-Low with an Internal PullUp and must be attached as defined in [Pins.h](Pins.h).
+Pins are Active-Low with an Internal PullUp and must be attached as defined in [Pins.h](firmware/Pins.h).
 
