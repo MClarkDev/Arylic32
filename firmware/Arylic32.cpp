@@ -6,15 +6,17 @@
 #define ARYLIC_DEV "10.3.106.120"
 
 Arylic32::Arylic32() {
-	timeout = TIMEOUT;
+  timeout = TIMEOUT;
 }
 
 void Arylic32::setup() {
+  pinMode(PIN_LED_B, OUTPUT);
+  digitalWrite(PIN_LED_B, HIGH);
 
   Serial.begin(115200);
 
-	WiFi.mode(WIFI_STA);
-	WiFi.begin(WIFI_SSID, WIFI_PASS);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
 
   api = new ArylicHTTP();
 

@@ -12,6 +12,6 @@
 
 #define PIN_LED_R GPIO_NUM_16
 #define PIN_LED_G GPIO_NUM_17
-#define PIN_LED_B GPIO_NUM_18
+#define PIN_LED_B GPIO_NUM_2
 
 #endif

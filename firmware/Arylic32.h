@@ -14,17 +14,17 @@
 
 class Arylic32 {
 
-	private:
-		int timeout;
+  private:
+    int timeout;
     ArylicHTTP* api;
     Buttons* buttons;
     void processButtons();
     void sleep();
 
-	public:
-		Arylic32();
-		void setup();
-		void loop();
+  public:
+    Arylic32();
+    void setup();
+    void loop();
 };
 
 void IRAM_ATTR onPressN();
