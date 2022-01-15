@@ -1,6 +1,8 @@
 #include "Buttons.h"
 
-boolean btn[] = {false, false, false, false, false};
+int tlst[] = {0, 0, 0, 0, 0};
+boolean lst[] = {false, false, false, false, false};
+boolean cur[] = {false, false, false, false, false};
 
 Buttons::Buttons() {
 
@@ -20,30 +22,38 @@ Buttons::Buttons() {
 int Buttons::processButtons() {
   int pressed = -1;
   for ( int x = 0; x < 5; x++ ) {
-    if(btn[x]) {
+    if(cur[x] == lst[x]) {
+      cur[x] = false;
+      continue;
+    }
+
+    lst[x] = cur[x];
+    if((millis() - tlst[x]) > DEBOUNCE) {
+      tlst[x] = millis();
       pressed = x;
-      btn[x] = false;
+    } else {
+      cur[x] = false;
     }
   }
   return pressed;
 }
 
 void IRAM_ATTR onPressN() {
-  btn[0] = true;
+  cur[0] = true;
 }
 
 void IRAM_ATTR onPressE() {
-  btn[1] = true;
+  cur[1] = true;
 }
 
 void IRAM_ATTR onPressS() {
-  btn[2] = true;
+  cur[2] = true;
 }
 
 void IRAM_ATTR onPressW() {
-  btn[3] = true;
+  cur[3] = true;
 }
 
 void IRAM_ATTR onPressC() {
-  btn[4] = true;
+  cur[4] = true;
 }

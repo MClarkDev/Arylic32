@@ -1,6 +1,8 @@
 #ifndef Buttons_H
 #define Buttons_H
 
+#define DEBOUNCE 300
+
 #include <Arduino.h>
 
 #include "Pins.h"

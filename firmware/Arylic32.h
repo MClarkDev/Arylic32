@@ -2,23 +2,24 @@
 #define Arylic32_H
 
 #define TIMEOUT 15000
-#define DELAY 400
+#define DELAY 25
 
 #include <Arduino.h>
 
 #include <WiFi.h>
 
 #include "Pins.h"
-#include "ArylicHTTP.h"
+#include "Config.h"
 #include "Buttons.h"
+#include "ArylicHTTP.h"
 
 class Arylic32 {
 
   private:
     int timeout;
-    ArylicHTTP* api;
-    Buttons* buttons;
-    void processButtons();
+    Config* cfgMgr;
+    Buttons* btnMgr;
+    ArylicHTTP* apiMgr;
     void sleep();
 
   public:
