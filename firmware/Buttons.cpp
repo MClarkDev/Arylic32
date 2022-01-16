@@ -21,7 +21,7 @@ Buttons::Buttons() {
 
 int Buttons::processButtons() {
   int pressed = -1;
-  for ( int x = 0; x < 5; x++ ) {
+  for ( int x = 0; x < NUMBTNS; x++ ) {
     if(cur[x] == lst[x]) {
       cur[x] = false;
       continue;

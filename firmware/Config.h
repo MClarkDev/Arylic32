@@ -9,6 +9,7 @@ class Config {
     Config();
     char* getWiFiSSID();
     char* getWiFiPass();
+    char* getTargetIP();
 };
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef Buttons_H
 #define Buttons_H
 
+#define NUMBTNS 5
 #define DEBOUNCE 300
 
 #include <Arduino.h>

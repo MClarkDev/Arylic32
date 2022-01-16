@@ -1,10 +1,5 @@
 #include "Arylic32.h"
 
-#define WIFI_SSID "network.name"
-#define WIFI_PASS "<password>"
-
-#define ARYLIC_DEV "10.3.106.120"
-
 Arylic32::Arylic32() {
   timeout = TIMEOUT;
 }
@@ -40,19 +35,19 @@ void Arylic32::loop() {
     timeout = TIMEOUT;
     switch (btn) {
       case 0:
-        apiMgr->setVolume(ARYLIC_DEV, 80);
+        apiMgr->setVolume(cfgMgr->getTargetIP(), 80);
         break;
       case 1:
-        apiMgr->playbackNext(ARYLIC_DEV);
+        apiMgr->playbackNext(cfgMgr->getTargetIP());
         break;
       case 2:
-        apiMgr->setVolume(ARYLIC_DEV, 40);
+        apiMgr->setVolume(cfgMgr->getTargetIP(), 40);
         break;
       case 3:
-        apiMgr->playbackPrev(ARYLIC_DEV);
+        apiMgr->playbackPrev(cfgMgr->getTargetIP());
         break;
       case 4:
-        apiMgr->playbackPause(ARYLIC_DEV);
+        apiMgr->playbackPause(cfgMgr->getTargetIP());
         break;
     }
   }

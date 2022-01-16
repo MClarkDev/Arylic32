@@ -11,3 +11,7 @@ char* Config::getWiFiSSID() {
 char* Config::getWiFiPass() {
   return "<password>";
 }
+
+char* Config::getTargetIP() {
+  return "10.3.106.120";
+}
