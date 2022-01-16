@@ -5,11 +5,9 @@ Arylic32::Arylic32() {
 }
 
 void Arylic32::setup() {
-  pinMode(PIN_LED_B, OUTPUT);
-  digitalWrite(PIN_LED_B, HIGH);
-
   Serial.begin(115200);
 
+  ledMgr = new Status();
   cfgMgr = new Config();
   btnMgr = new Buttons();
   apiMgr = new ArylicHTTP();

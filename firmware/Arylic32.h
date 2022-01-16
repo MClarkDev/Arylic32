@@ -10,6 +10,7 @@
 
 #include "Pins.h"
 #include "Config.h"
+#include "Status.h"
 #include "Buttons.h"
 #include "ArylicHTTP.h"
 
@@ -17,6 +18,7 @@ class Arylic32 {
 
   private:
     int timeout;
+    Status* ledMgr;
     Config* cfgMgr;
     Buttons* btnMgr;
     ArylicHTTP* apiMgr;
