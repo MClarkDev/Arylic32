@@ -23,7 +23,7 @@ void Arylic32::loop() {
   }
 
   if(WiFi.status() != WL_CONNECTED) {
-    //notConnected();
+    ledMgr->showConnecting();
     delay(DELAY);
     return;
   }
@@ -31,6 +31,7 @@ void Arylic32::loop() {
   int btn = btnMgr->processButtons();
   if (btn >= 0) {
     timeout = TIMEOUT;
+    ledMgr->showCommand();
     switch (btn) {
       case 0:
         apiMgr->setVolume(cfgMgr->getTargetIP(), 80);
@@ -50,6 +51,7 @@ void Arylic32::loop() {
     }
   }
 
+  ledMgr->showTimeout(timeout, TIMEOUT);
   delay(DELAY);
 }
 

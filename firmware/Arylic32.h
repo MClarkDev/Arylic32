@@ -1,7 +1,7 @@
 #ifndef Arylic32_H
 #define Arylic32_H
 
-#define TIMEOUT 15000
+#define TIMEOUT 12000
 #define DELAY 25
 
 #include <Arduino.h>
