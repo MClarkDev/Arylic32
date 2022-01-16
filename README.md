@@ -6,15 +6,30 @@ An ESP32 based remote for [Arylic](https://www.arylic.com/) whole home audio sys
 
 Designed for low-power ESP32's, the firmware spends most of it's time in a deep sleep state.
 
-Press the center button to wake the device which will then connect to WiFi. After a period of inactivity, 12 seconds, the device will go back to sleep.
+Pressing the center button will wake the device and connect to WiFi.
+
+After a period of inactivity (12 seconds), the device will go back into a deep sleep.
 
 There are 5 buttons currently supported:
 
-- N: Volume @ 80%
-- S: Volume @ 40%
+- N: Volume + 5%
+- S: Volume - 5%
 - E: Next Track
 - W: Prev Track
-- C: Pause
+- C: Play / Pause
+
+## Status LED
+
+An RGB status LED may be attached to view additional states.
+
+Alternatively, the single onboard LED of the ESP32 Dev-module can also be used to determine the status of the device.
+
+- 20% : Connecting
+- 10% : Fetching device info
+- 99% : Sending a command
+- 50% : Idle, dims to 0
+
+After any action the device begins a counter timer to shutdown; the idle LED will dim as the sleep timer counts to 0.
 
 ## Setup
 

@@ -25,9 +25,6 @@ class Arylic32 {
     ArylicHTTP* apiMgr;
     void sleep();
 
-    boolean playerCurrent;
-    StaticJsonDocument<1024> playerData;
-
   public:
     Arylic32();
     void setup();
