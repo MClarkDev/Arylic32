@@ -11,6 +11,7 @@
 
 class Status {
   private:
+    void setupChannel(int ch, int pin);
     void setRGB(int r, int g, int b);
 
   public:
@@ -21,4 +22,4 @@ class Status {
     void showTimeout(int cur, int tmout);
 };
 
-#endif Status_H
+#endif

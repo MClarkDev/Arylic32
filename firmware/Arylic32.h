@@ -7,6 +7,7 @@
 #include <Arduino.h>
 
 #include <WiFi.h>
+#include <ArduinoJson.h>
 
 #include "Pins.h"
 #include "Config.h"
@@ -18,13 +19,14 @@ class Arylic32 {
 
   private:
     int timeout;
-    boolean current;
-    String device;
     Status* ledMgr;
     Config* cfgMgr;
     Buttons* btnMgr;
     ArylicHTTP* apiMgr;
     void sleep();
+
+    boolean playerCurrent;
+    StaticJsonDocument<1024> playerData;
 
   public:
     Arylic32();

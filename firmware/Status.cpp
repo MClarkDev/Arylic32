@@ -2,19 +2,19 @@
 
 Status::Status() {
 
-  pinMode(PIN_LED_R, OUTPUT);
-  pinMode(PIN_LED_G, OUTPUT);
-  pinMode(PIN_LED_B, OUTPUT);
-
-  ledcAttachPin(PIN_LED_R, CH_R);
-  ledcAttachPin(PIN_LED_G, CH_G);
-  ledcAttachPin(PIN_LED_B, CH_B);
-
-  ledcSetup(CH_R, 12000, 8);
-  ledcSetup(CH_G, 12000, 8);
-  ledcSetup(CH_B, 12000, 8);
+  setupChannel(CH_R, PIN_LED_R);
+  setupChannel(CH_G, PIN_LED_G);
+  setupChannel(CH_B, PIN_LED_B);
 
   setRGB(200, 200, 200);
+}
+
+void Status::setupChannel(int ch, int pin) {
+  ledcSetup(ch, 12000, 8);
+  ledcWrite(ch, 127);
+
+  pinMode(pin, OUTPUT);
+  ledcAttachPin(pin, ch);
 }
 
 void Status::setRGB(int r, int g, int b) {

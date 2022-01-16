@@ -24,29 +24,31 @@ void Arylic32::loop() {
 
   if(WiFi.status() != WL_CONNECTED) {
     ledMgr->showConnecting();
+    btnMgr->clearButtons();
     delay(DELAY);
     return;
   }
 
-  if(!current) {
+  if(!playerCurrent) {
     ledMgr->showUpdating();
-    device = apiMgr->getPlayerStatus(cfgMgr->getTargetIP());
-    current = true;
+    deserializeJson(playerData, apiMgr->getPlayerStatus(cfgMgr->getTargetIP()));
+    playerCurrent = true;
   }
 
   int btn = btnMgr->processButtons();
   if (btn >= 0) {
     timeout = TIMEOUT;
     ledMgr->showCommand();
+    int vol = (int)(playerData["vol"].as<long>());
     switch (btn) {
       case 0:
-        apiMgr->setVolume(cfgMgr->getTargetIP(), 80);
+        apiMgr->setVolume(cfgMgr->getTargetIP(), vol + 5);
         break;
       case 1:
         apiMgr->playbackNext(cfgMgr->getTargetIP());
         break;
       case 2:
-        apiMgr->setVolume(cfgMgr->getTargetIP(), 40);
+        apiMgr->setVolume(cfgMgr->getTargetIP(), vol - 5);
         break;
       case 3:
         apiMgr->playbackPrev(cfgMgr->getTargetIP());
@@ -55,7 +57,7 @@ void Arylic32::loop() {
         apiMgr->playbackPause(cfgMgr->getTargetIP());
         break;
     }
-    current = false;
+    playerCurrent = false;
   }
 
   ledMgr->showTimeout(timeout, TIMEOUT);

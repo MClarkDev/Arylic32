@@ -19,6 +19,14 @@ Buttons::Buttons() {
   attachInterrupt(PIN_DPAD_C, onPressC, RISING);
 }
 
+void Buttons::clearButtons() {
+  for ( int x = 0; x < NUMBTNS; x++ ) {
+    tlst[x] = millis();
+    cur[x] = false;
+    lst[x] = false;
+  }
+}
+
 int Buttons::processButtons() {
   int pressed = -1;
   for ( int x = 0; x < NUMBTNS; x++ ) {

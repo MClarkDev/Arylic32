@@ -11,6 +11,7 @@
 class Buttons {
   public:
     Buttons();
+    void clearButtons();
     int processButtons();
 };
 
