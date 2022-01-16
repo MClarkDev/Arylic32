@@ -10,13 +10,19 @@ Pressing the center button will wake the device and connect to WiFi.
 
 After a period of inactivity (12 seconds), the device will go back into a deep sleep.
 
-There are 5 buttons currently supported:
+A rotary encoder wheel in addition to 5 directional buttons are use for device operations.
 
-- N: Volume + 5%
-- S: Volume - 5%
+Supported features:
+
+- N: Play Preset #1
 - E: Next Track
 - W: Prev Track
-- C: Play / Pause
+- S: Ungroup Device
+- C: Play / Pause / Wake
+
+- Wheel+ : Volume +5%
+- Wheel- : Volume -5%
+
 
 ## Status LED
 

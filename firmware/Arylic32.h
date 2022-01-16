@@ -7,21 +7,24 @@
 #include <Arduino.h>
 
 #include <WiFi.h>
+#include <ArylicHTTP.h>
 #include <ArduinoJson.h>
 
-#include "Pins.h"
 #include "Config.h"
+
+#include "Pins.h"
 #include "Status.h"
+#include "Wheel.h"
 #include "Buttons.h"
-#include "ArylicHTTP.h"
 
 class Arylic32 {
 
   private:
     int timeout;
     Status* ledMgr;
-    Config* cfgMgr;
+    Wheel* encMgr;
     Buttons* btnMgr;
+    Config* cfgMgr;
     ArylicHTTP* apiMgr;
     void sleep();
 

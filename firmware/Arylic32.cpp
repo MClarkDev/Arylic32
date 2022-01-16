@@ -9,8 +9,9 @@ void Arylic32::setup() {
   Serial.println("Booting...");
 
   ledMgr = new Status();
-  cfgMgr = new Config();
+  encMgr = new Wheel();
   btnMgr = new Buttons();
+  cfgMgr = new Config();
   apiMgr = new ArylicHTTP();
 
   WiFi.mode(WIFI_STA);
@@ -33,7 +34,10 @@ void Arylic32::loop() {
   }
 
   int btn = btnMgr->processButtons();
-  if (btn >= 0) {
+  int dir = encMgr->getDirection();
+
+  int cmd = (dir != 0) ? 98 + dir : btn;
+  if (cmd >= 0) {
 
     timeout = TIMEOUT;
     ledMgr->showUpdating();
@@ -43,24 +47,21 @@ void Arylic32::loop() {
     deserializeJson(playerData, json.c_str());
 
     ledMgr->showCommand();
-    Serial.println("Command: " + String(btn));
+    Serial.println("Command: " + String(cmd));
 
     int vol = (int)(playerData["vol"].as<long>());
     const char* sta = playerData["status"].as<const char*>();
     boolean play = String(sta).equals("play");
-    Serial.println(play);
 
-    switch (btn) {
+    switch (cmd) {
       case 0:
-        vol = (vol + 5 >= 100) ? 100 : vol + 5;
-        apiMgr->setVolume(cfgMgr->getTargetIP(), vol);
+        apiMgr->preset(cfgMgr->getTargetIP(), 1);
         break;
       case 1:
         apiMgr->playbackNext(cfgMgr->getTargetIP());
         break;
       case 2:
-        vol = vol - 5 <= 0 ? 0 : vol - 5;
-        apiMgr->setVolume(cfgMgr->getTargetIP(), vol);
+        apiMgr->groupLeave(cfgMgr->getTargetIP());
         break;
       case 3:
         apiMgr->playbackPrev(cfgMgr->getTargetIP());
@@ -71,6 +72,14 @@ void Arylic32::loop() {
         } else {
           apiMgr->playbackResume(cfgMgr->getTargetIP());
         }
+        break;
+      case 97:
+        vol = vol - 5 <= 0 ? 0 : vol - 5;
+        apiMgr->setVolume(cfgMgr->getTargetIP(), vol);
+        break;
+      case 99:
+        vol = (vol + 5 >= 100) ? 100 : vol + 5;
+        apiMgr->setVolume(cfgMgr->getTargetIP(), vol);
         break;
     }
   }
