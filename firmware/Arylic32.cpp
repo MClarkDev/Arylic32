@@ -28,6 +28,12 @@ void Arylic32::loop() {
     return;
   }
 
+  if(!current) {
+    ledMgr->showUpdating();
+    device = apiMgr->getPlayerStatus(cfgMgr->getTargetIP());
+    current = true;
+  }
+
   int btn = btnMgr->processButtons();
   if (btn >= 0) {
     timeout = TIMEOUT;
@@ -49,6 +55,7 @@ void Arylic32::loop() {
         apiMgr->playbackPause(cfgMgr->getTargetIP());
         break;
     }
+    current = false;
   }
 
   ledMgr->showTimeout(timeout, TIMEOUT);

@@ -6,44 +6,37 @@ Status::Status() {
   pinMode(PIN_LED_G, OUTPUT);
   pinMode(PIN_LED_B, OUTPUT);
 
-  ledcAttachPin(PIN_LED_R, 1);
-  ledcAttachPin(PIN_LED_G, 2);
-  ledcAttachPin(PIN_LED_B, 3);
+  ledcAttachPin(PIN_LED_R, CH_R);
+  ledcAttachPin(PIN_LED_G, CH_G);
+  ledcAttachPin(PIN_LED_B, CH_B);
 
-  ledcSetup(1, 12000, 8);
-  ledcSetup(2, 12000, 8);
-  ledcSetup(3, 12000, 8);
+  ledcSetup(CH_R, 12000, 8);
+  ledcSetup(CH_G, 12000, 8);
+  ledcSetup(CH_B, 12000, 8);
 
-  ledcWrite(1, 255);
-  ledcWrite(2, 255);
-  ledcWrite(3, 255);
+  setRGB(200, 200, 200);
+}
+
+void Status::setRGB(int r, int g, int b) {
+  ledcWrite(CH_R, r);
+  ledcWrite(CH_G, g);
+  ledcWrite(CH_B, b);
 }
 
 void Status::showConnecting() {
-
-  ledcWrite(1, 80);
-  ledcWrite(2, 80);
-  ledcWrite(3, 80);
+ setRGB(100, 100, 100);
 }
 
-void Status::showConnected() {
-
-  ledcWrite(1, 180);
-  ledcWrite(2, 180);
-  ledcWrite(3, 180);
+void Status::showUpdating() {
+  setRGB(20, 20, 20);
 }
 
 void Status::showCommand() {
-
-  ledcWrite(1, 255);
-  ledcWrite(2, 255);
-  ledcWrite(3, 255);
+  setRGB(255, 255, 255);
 }
 
 void Status::showTimeout(int cur, int tmout) {
   int pct = (int)(100 * cur / tmout);
   int val = (int)(pct * 127 / 100);
-  ledcWrite(1, val);
-  ledcWrite(2, val);
-  ledcWrite(3, val);
+  setRGB(val, val, val);
 }

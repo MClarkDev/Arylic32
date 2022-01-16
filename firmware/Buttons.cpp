@@ -31,9 +31,8 @@ int Buttons::processButtons() {
     if((millis() - tlst[x]) > DEBOUNCE) {
       tlst[x] = millis();
       pressed = x;
-    } else {
-      cur[x] = false;
     }
+    cur[x] = false;
   }
   return pressed;
 }

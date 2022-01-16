@@ -2,7 +2,7 @@
 #define Buttons_H
 
 #define NUMBTNS 5
-#define DEBOUNCE 300
+#define DEBOUNCE 350
 
 #include <Arduino.h>
 

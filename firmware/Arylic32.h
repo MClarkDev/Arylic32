@@ -18,6 +18,8 @@ class Arylic32 {
 
   private:
     int timeout;
+    boolean current;
+    String device;
     Status* ledMgr;
     Config* cfgMgr;
     Buttons* btnMgr;
