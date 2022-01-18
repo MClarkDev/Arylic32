@@ -28,7 +28,7 @@ void Buttons::clearButtons() {
 }
 
 int Buttons::processButtons() {
-  int pressed = -1;
+  int pressed = 0;
   for ( int x = 0; x < NUMBTNS; x++ ) {
     if(cur[x] == lst[x]) {
       cur[x] = false;
@@ -38,7 +38,7 @@ int Buttons::processButtons() {
     lst[x] = cur[x];
     if((millis() - tlst[x]) > DEBOUNCE) {
       tlst[x] = millis();
-      pressed = x;
+      pressed += pow(2, x);
     }
     cur[x] = false;
   }

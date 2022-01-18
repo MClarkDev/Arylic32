@@ -20,9 +20,10 @@ Supported features:
 - S: Ungroup Device
 - C: Play / Pause / Wake
 
-- Wheel+ : Volume +5%
-- Wheel- : Volume -5%
+- Wheel+ : Volume++
+- Wheel- : Volume--
 
+Pins are Active-Low with an Internal PullUp and must be attached as defined in [Pins.h](firmware/Pins.h).
 
 ## Status LED
 
@@ -39,9 +40,18 @@ After any action the device begins a counter timer to shutdown; the idle LED wil
 
 ## Setup
 
-WiFi and target device configuration must currently be set at build time.
+WiFi and device configuration are saved and NVS and presist through reboots and firmware updates.
 
-These variables must be modified in [Config.cpp](firmware/Config.cpp).
+To upload device configuration, modify parameters in the [ConfigScript](extras/ConfigScript/ConfigScript.ino) and run the script.
 
-Pins are Active-Low with an Internal PullUp and must be attached as defined in [Pins.h](firmware/Pins.h).
+The Arylic32 firmware must then be uploaded.
+
+### Dependencies
+
+To build this firmware package you must have the following dependencies installed:
+
+- ESP32 Core (2.0.2)
+- ArduinoJson (6.18.5)
+- ArylicHTTP (0.0.2)
+- ESP32Encoder (0.7.0)
 

@@ -9,14 +9,29 @@ void Arylic32::setup() {
   Serial.println("Booting...");
 
   ledMgr = new Status();
+
+  cfgMgr = new Config();
+  if(!cfgMgr->init()) {
+    ledMgr->showFormatting();
+    Serial.println("Formatting NVS...");
+    cfgMgr->format();
+    ESP.restart();
+  }else if(!cfgMgr->isConfigured()){
+    ledMgr->showSetupMode();
+    Serial.println("Entering setup mode.");
+    cfgMgr->beginSetup();
+    ESP.restart();
+  }
+
   encMgr = new Wheel();
   btnMgr = new Buttons();
-  cfgMgr = new Config();
-  apiMgr = new ArylicHTTP();
 
   WiFi.mode(WIFI_STA);
-  Serial.print("Connecting");
-  WiFi.begin(cfgMgr->getWiFiSSID(), cfgMgr->getWiFiPass());
+  Serial.print("Connecting: ");
+  Serial.println(cfgMgr->getWiFiSSID());
+  WiFi.begin(cfgMgr->getWiFiSSID().c_str(), cfgMgr->getWiFiPass().c_str());
+
+  apiMgr = new ArylicHTTP(cfgMgr->getTargetIP());
 }
 
 void Arylic32::loop() {
@@ -36,56 +51,61 @@ void Arylic32::loop() {
   int btn = btnMgr->processButtons();
   int dir = encMgr->getDirection();
 
+  // jog is action present, else button
   int cmd = (dir != 0) ? 98 + dir : btn;
-  if (cmd >= 0) {
+  if (cmd > 0) {
 
     timeout = TIMEOUT;
-    ledMgr->showUpdating();
-    Serial.println("\nUpdating...");
-    String json = apiMgr->getPlayerStatus(cfgMgr->getTargetIP());
-    StaticJsonDocument<1024> playerData;
-    deserializeJson(playerData, json.c_str());
-
     ledMgr->showCommand();
     Serial.println("Command: " + String(cmd));
 
-    int vol = (int)(playerData["vol"].as<long>());
-    const char* sta = playerData["status"].as<const char*>();
-    boolean play = String(sta).equals("play");
-
     switch (cmd) {
-      case 0:
-        apiMgr->preset(cfgMgr->getTargetIP(), 1);
+      case 1: // N
+        apiMgr->preset(1);
         break;
-      case 1:
-        apiMgr->playbackNext(cfgMgr->getTargetIP());
+      case 2: // E
+        apiMgr->playbackNext();
         break;
-      case 2:
-        apiMgr->groupLeave(cfgMgr->getTargetIP());
+      case 3: // NE
         break;
-      case 3:
-        apiMgr->playbackPrev(cfgMgr->getTargetIP());
+      case 4: // S
+        apiMgr->groupLeave();
         break;
-      case 4:
-        if(play) {
-          apiMgr->playbackPause(cfgMgr->getTargetIP());
-        } else {
-          apiMgr->playbackResume(cfgMgr->getTargetIP());
-        }
+      case 6: // SE
         break;
-      case 97:
-        vol = vol - 5 <= 0 ? 0 : vol - 5;
-        apiMgr->setVolume(cfgMgr->getTargetIP(), vol);
+      case 8: // W
+        apiMgr->playbackPrev();
         break;
-      case 99:
-        vol = (vol + 5 >= 100) ? 100 : vol + 5;
-        apiMgr->setVolume(cfgMgr->getTargetIP(), vol);
+      case 9: // NW
+        break;
+      case 12: // SW
+        break;
+      case 16: // C
+        playerPlayPause();
+        break;
+      case 97: // Jog Down
+        apiMgr->setVolumeStepDown();
+        break;
+      case 99: // Jog Up
+        apiMgr->setVolumeStepDown();
         break;
     }
   }
 
   ledMgr->showTimeout(timeout, TIMEOUT);
   delay(DELAY);
+}
+
+void Arylic32::playerPlayPause() {
+  String json = apiMgr->getPlayerStatus();
+  StaticJsonDocument<1024> playerData;
+  deserializeJson(playerData, json.c_str());
+  const char* sta = playerData["status"].as<const char*>();
+  if(String(sta).equals("play")) {
+    apiMgr->playbackPause();
+  } else {
+    apiMgr->playbackResume();
+  }
 }
 
 void Arylic32::sleep() {

@@ -16,8 +16,9 @@ class Status {
 
   public:
     Status();
+    void showFormatting();
+    void showSetupMode();
     void showConnecting();
-    void showUpdating();
     void showCommand();
     void showTimeout(int cur, int tmout);
 };

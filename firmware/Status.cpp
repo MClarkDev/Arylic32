@@ -23,12 +23,16 @@ void Status::setRGB(int r, int g, int b) {
   ledcWrite(CH_B, b);
 }
 
-void Status::showConnecting() {
- setRGB(50, 50, 50);
+void Status::showFormatting() {
+  setRGB(10, 10, 10);
 }
 
-void Status::showUpdating() {
-  setRGB(25, 25, 25);
+void Status::showSetupMode() {
+  setRGB(10, 10, 10);
+}
+
+void Status::showConnecting() {
+ setRGB(50, 50, 50);
 }
 
 void Status::showCommand() {

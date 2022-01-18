@@ -27,6 +27,7 @@ class Arylic32 {
     Config* cfgMgr;
     ArylicHTTP* apiMgr;
     void sleep();
+    void playerPlayPause();
 
   public:
     Arylic32();
