@@ -81,7 +81,7 @@ void Arylic32::loop() {
       case 12: // SW
         break;
       case 16: // C
-        playerPlayPause();
+        apiMgr->playbackTogglePlay();
         break;
       case 97: // Jog Down
         apiMgr->setVolumeStepDown();
@@ -94,18 +94,6 @@ void Arylic32::loop() {
 
   ledMgr->showTimeout(timeout, TIMEOUT);
   delay(DELAY);
-}
-
-void Arylic32::playerPlayPause() {
-  String json = apiMgr->getPlayerStatus();
-  StaticJsonDocument<1024> playerData;
-  deserializeJson(playerData, json.c_str());
-  const char* sta = playerData["status"].as<const char*>();
-  if(String(sta).equals("play")) {
-    apiMgr->playbackPause();
-  } else {
-    apiMgr->playbackResume();
-  }
 }
 
 void Arylic32::sleep() {
