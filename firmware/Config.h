@@ -1,27 +1,21 @@
 #ifndef Config_H
 #define Config_H
 
-#define CONF_CONFIGURED "sysConfigured"
-#define CONF_CONFIGURED_DEF false
-
-#define CONF_NETNAME "netName"
-#define CONF_NETNAME_DEF "Arylic32"
-
-#define CONF_NETPASS "netPass"
-#define CONF_NETPASS_DEF "Arylic32"
-
-#define CONF_NETDEV "netDev"
-#define CONF_NETDEV_DEF "192.168.1.200"
+#define A32 "Arylic32"
 
 #include <Arduino.h>
 
 #include <nvs_flash.h>
 #include <Preferences.h>
 
+#include "BLEProps.h"
+
 class Config {
 
   private:
     Preferences* conf;
+    boolean getBool(const char* propKey);
+    String getString(const char* propKey);
 
   public:
     Config();
@@ -32,7 +26,6 @@ class Config {
     String getTargetIP();
     boolean isConfigured();
     void setIsConfigured(boolean configured);
-    boolean beginSetup();
 };
 
 #endif

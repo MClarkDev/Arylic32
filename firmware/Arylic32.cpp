@@ -21,7 +21,8 @@ void Arylic32::setup() {
   }else if(!cfgMgr->isConfigured()){
     ledMgr->showSetupMode();
     ESP_LOGI(LOGTAG, "Entering setup mode.");
-    if(cfgMgr->beginSetup()) {
+    Setup* s = new Setup(cfgMgr);
+    if(s->runDeviceSetup()) {
       ESP.restart();
     }else {
       sleep();

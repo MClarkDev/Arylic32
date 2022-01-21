@@ -5,7 +5,7 @@ Config::Config() {
 }
 
 boolean Config::init() {
-  return conf->begin("arylic32", false);
+  return conf->begin(A32, false);
 }
 
 boolean Config::reconfigure() {
@@ -14,25 +14,31 @@ boolean Config::reconfigure() {
 }
 
 boolean Config::isConfigured() {
-  return conf->getBool(CONF_CONFIGURED, CONF_CONFIGURED_DEF);
+  return getBool(BLE_PROP_HWC_CONFIGURED);
 }
 
 void Config::setIsConfigured(boolean enabled) {
-  conf->putBool(CONF_CONFIGURED, enabled);
+  conf->putBool(BLE_PROP_HWC_CONFIGURED, enabled);
 }
 
 String Config::getWiFiSSID() {
-  return conf->getString(CONF_NETNAME, CONF_NETNAME_DEF);
+  return getString(BLE_PROP_NET_NAME);
 }
 
 String Config::getWiFiPass() {
-  return conf->getString(CONF_NETPASS, CONF_NETPASS_DEF);
+  return getString(BLE_PROP_NET_PASS);
 }
 
 String Config::getTargetIP() {
-  return conf->getString(CONF_NETDEV, CONF_NETDEV_DEF);
+  return getString(BLE_PROP_WHA_MASTER);
 }
 
-boolean Config::beginSetup() {
-  return isConfigured();
+boolean Config::getBool(const char* propKey) {
+  String key = String(propKey).substring(0, 8);
+  return conf->getBool(key.c_str(), false);
+}
+
+String Config::getString(const char* propKey) {
+  String key = String(propKey).substring(0, 8);
+  return conf->getString(key.c_str(), "");
 }

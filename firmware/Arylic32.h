@@ -4,6 +4,7 @@
 #define TIMEOUT 12000
 #define DELAY 25
 
+#define A32    "Arylic32"
 #define LOGTAG "Arylic32"
 
 #include <Arduino.h>
@@ -13,6 +14,7 @@
 #include <ArduinoJson.h>
 
 #include "Config.h"
+#include "Setup.h"
 
 #include "Pins.h"
 #include "Status.h"
