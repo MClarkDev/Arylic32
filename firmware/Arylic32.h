@@ -4,6 +4,8 @@
 #define TIMEOUT 12000
 #define DELAY 25
 
+#define LOGTAG "Arylic32"
+
 #include <Arduino.h>
 
 #include <WiFi.h>
@@ -34,11 +36,5 @@ class Arylic32 {
     void setup();
     void loop();
 };
-
-void IRAM_ATTR onPressN();
-void IRAM_ATTR onPressE();
-void IRAM_ATTR onPressS();
-void IRAM_ATTR onPressW();
-void IRAM_ATTR onPressC();
 
 #endif

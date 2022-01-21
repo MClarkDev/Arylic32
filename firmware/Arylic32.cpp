@@ -5,31 +5,37 @@ Arylic32::Arylic32() {
 }
 
 void Arylic32::setup() {
-  Serial.begin(115200);
-  Serial.println("Booting...");
+  ESP_LOGI(LOGTAG, "Booting...");
 
   ledMgr = new Status();
 
   cfgMgr = new Config();
   if(!cfgMgr->init()) {
     ledMgr->showFormatting();
-    Serial.println("Formatting NVS...");
-    cfgMgr->format();
-    ESP.restart();
+    ESP_LOGI(LOGTAG, "Formatting NVS...");
+    if(cfgMgr->reconfigure()) {
+      ESP.restart();
+    }else {
+      sleep();
+    }
   }else if(!cfgMgr->isConfigured()){
     ledMgr->showSetupMode();
-    Serial.println("Entering setup mode.");
-    cfgMgr->beginSetup();
-    ESP.restart();
+    ESP_LOGI(LOGTAG, "Entering setup mode.");
+    if(cfgMgr->beginSetup()) {
+      ESP.restart();
+    }else {
+      sleep();
+    }
   }
 
   encMgr = new Wheel();
   btnMgr = new Buttons();
 
   WiFi.mode(WIFI_STA);
-  Serial.print("Connecting: ");
-  Serial.println(cfgMgr->getWiFiSSID());
-  WiFi.begin(cfgMgr->getWiFiSSID().c_str(), cfgMgr->getWiFiPass().c_str());
+  String ssid = cfgMgr->getWiFiSSID();
+  String pass = cfgMgr->getWiFiPass();
+  ESP_LOGI(LOGTAG, "Connecting: %s", ssid);
+  WiFi.begin(ssid.c_str(), pass.c_str());
 
   apiMgr = new ArylicHTTP(cfgMgr->getTargetIP());
 }
@@ -43,7 +49,7 @@ void Arylic32::loop() {
   if(WiFi.status() != WL_CONNECTED) {
     ledMgr->showConnecting();
     btnMgr->clearButtons();
-    Serial.print(".");
+    ESP_LOGD(LOGTAG, ".");
     delay(DELAY);
     return;
   }
@@ -57,7 +63,7 @@ void Arylic32::loop() {
 
     timeout = TIMEOUT;
     ledMgr->showCommand();
-    Serial.println("Command: " + String(cmd));
+    ESP_LOGI(LOGTAG, "Command: %d", cmd);
 
     switch (cmd) {
       case 1: // N
@@ -97,7 +103,7 @@ void Arylic32::loop() {
 }
 
 void Arylic32::sleep() {
-  Serial.println("Going to sleep.");
+  ESP_LOGI(LOGTAG, "Going to sleep.");
   esp_sleep_enable_ext0_wakeup(PIN_DPAD_C, 0);
   esp_deep_sleep_start();
 }

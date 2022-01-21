@@ -26,13 +26,13 @@ class Config {
   public:
     Config();
     boolean init();
-    void format();
+    boolean reconfigure();
     String getWiFiSSID();
     String getWiFiPass();
     String getTargetIP();
     boolean isConfigured();
     void setIsConfigured(boolean configured);
-    void beginSetup();
+    boolean beginSetup();
 };
 
 #endif

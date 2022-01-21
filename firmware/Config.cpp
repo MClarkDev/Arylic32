@@ -8,8 +8,9 @@ boolean Config::init() {
   return conf->begin("arylic32", false);
 }
 
-void Config::format() {
+boolean Config::reconfigure() {
   nvs_flash_init();
+  return true;
 }
 
 boolean Config::isConfigured() {
@@ -32,6 +33,6 @@ String Config::getTargetIP() {
   return conf->getString(CONF_NETDEV, CONF_NETDEV_DEF);
 }
 
-void Config::beginSetup() {
-  setIsConfigured(true);
+boolean Config::beginSetup() {
+  return isConfigured();
 }
