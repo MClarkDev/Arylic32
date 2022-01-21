@@ -9,6 +9,9 @@
 #include "Pins.h"
 
 class Buttons {
+  private:
+    void setupButton(int pin, void (*callback)(void));
+
   public:
     Buttons();
     void clearButtons();

@@ -6,17 +6,17 @@ boolean cur[] = {false, false, false, false, false};
 
 Buttons::Buttons() {
 
-  pinMode(PIN_DPAD_N, INPUT_PULLUP);
-  pinMode(PIN_DPAD_S, INPUT_PULLUP);
-  pinMode(PIN_DPAD_E, INPUT_PULLUP);
-  pinMode(PIN_DPAD_W, INPUT_PULLUP);
-  pinMode(PIN_DPAD_C, INPUT_PULLUP);
+  setupButton(PIN_DPAD_N, onPressN);
+  setupButton(PIN_DPAD_E, onPressE);
+  setupButton(PIN_DPAD_S, onPressS);
+  setupButton(PIN_DPAD_W, onPressW);
+  setupButton(PIN_DPAD_C, onPressC);
+}
 
-  attachInterrupt(PIN_DPAD_N, onPressN, RISING);
-  attachInterrupt(PIN_DPAD_E, onPressE, RISING);
-  attachInterrupt(PIN_DPAD_S, onPressS, RISING);
-  attachInterrupt(PIN_DPAD_W, onPressW, RISING);
-  attachInterrupt(PIN_DPAD_C, onPressC, RISING);
+void Buttons::setupButton(int pin, void (*callback)(void)) {
+
+  pinMode(pin, INPUT_PULLUP);
+  attachInterrupt(pin, callback, RISING);
 }
 
 void Buttons::clearButtons() {

@@ -13,20 +13,20 @@ void Arylic32::setup() {
   if(!cfgMgr->init()) {
     ledMgr->showFormatting();
     ESP_LOGI(LOGTAG, "Formatting NVS...");
-    if(cfgMgr->reconfigure()) {
-      ESP.restart();
-    }else {
+    if(!cfgMgr->reconfigure()) {
+      ledMgr->showError(1);
       sleep();
     }
+    ESP.restart();
   }else if(!cfgMgr->isConfigured()){
     ledMgr->showSetupMode();
     ESP_LOGI(LOGTAG, "Entering setup mode.");
     Setup* s = new Setup(cfgMgr);
-    if(s->runDeviceSetup()) {
-      ESP.restart();
-    }else {
+    if(!s->runDeviceSetup()) {
+      ledMgr->showError(2);
       sleep();
     }
+    ESP.restart();
   }
 
   encMgr = new Wheel();

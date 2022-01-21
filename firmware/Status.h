@@ -21,6 +21,7 @@ class Status {
     void showConnecting();
     void showCommand();
     void showTimeout(int cur, int tmout);
+    void showError(int code);
 };
 
 #endif

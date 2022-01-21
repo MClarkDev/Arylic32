@@ -44,3 +44,7 @@ void Status::showTimeout(int cur, int tmout) {
   int val = (int)(pct * 127 / 100);
   setRGB(val, val, val);
 }
+
+void Status::showError(int code) {
+  setRGB(200, 200, 200);
+}
