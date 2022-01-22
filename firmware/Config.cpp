@@ -10,15 +10,26 @@ Config::Config() {
   conf = new Preferences();
 }
 
-boolean Config::init() {
+int Config::init() {
   boolean init = conf->begin(A32, false);
   ESP_LOGD(A32, "Config loaded: %d", init);
-  return init;
+
+  if(!init) {
+    ESP_LOGW(A32, "Failed to initialize NVS.");
+    return 0;
+  }
+
+  conf->putInt(CFG_BOOT, (getBootCycles() + 1));
+  return getBootCycles();
 }
 
 boolean Config::reconfigure() {
   nvs_flash_init();
   return true;
+}
+
+int Config::getBootCycles() {
+  return conf->getInt(CFG_BOOT);
 }
 
 boolean Config::isConfigured() {

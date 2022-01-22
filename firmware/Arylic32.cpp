@@ -4,7 +4,7 @@
  * Arylic32.cpp
  */
  
- #include "Arylic32.h"
+#include "Arylic32.h"
 
 Arylic32::Arylic32() {
 }
@@ -15,7 +15,12 @@ void Arylic32::setup() {
 
   ledMgr = new Status();
   cfgMgr = new Config();
-  if(!cfgMgr->init()) {
+  cmdMgr = new Commander(cfgMgr);
+
+  int boots = cfgMgr->init();
+  ESP_LOGD(A32, "Boots: %d", boots);
+
+  if(boots <= 0) {
     ledMgr->showFormatting();
     ESP_LOGI(A32, "Formatting NVS...");
     if(!cfgMgr->reconfigure()) {
@@ -41,7 +46,6 @@ void Arylic32::setup() {
   ESP_LOGI(A32, "Connecting: %s", ssid);
   WiFi.begin(ssid.c_str(), pass.c_str());
 
-  cmdMgr = new Commander(cfgMgr);
   timeout = cfgMgr->getInt(BLE_PROP_HWC_TIMEOUT);
   touch();
 }

@@ -8,6 +8,7 @@
 
 Setup::Setup(Config* cfg) {
   this->cfg = cfg;
+  this->selected = 1;
 }
 
 boolean Setup::runDeviceSetup() {
@@ -17,8 +18,8 @@ boolean Setup::runDeviceSetup() {
 
   // wait for setup or timeout
   long timeout = millis() + SETUPTIME;
-  while(!cfg->isConfigured() || millis() < timeout) {
-      delay(250);
+  while(!cfg->isConfigured() && millis() < timeout) {
+    delay(250);
   }
 
   boolean configured = cfg->isConfigured();
@@ -29,6 +30,9 @@ boolean Setup::runDeviceSetup() {
 void Setup::startBLEServer() {
   ESP_LOGD(A32, "Setting up BLE...");
 
+  int R = BLECharacteristic::PROPERTY_READ;
+  int W = BLECharacteristic::PROPERTY_WRITE;
+
   //ConfigCallback* configCallback = new ConfigCallback();
 
   BLEDevice::init(A32);
@@ -38,14 +42,77 @@ void Setup::startBLEServer() {
   BLECharacteristic *pCharacteristic;
 
   //
+  // Hardware Information
+  //
+  pService = pServer->createService(BLE_SERVICE_HWI);
+
+  // Device Name
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWI_NAME, R);
+  pCharacteristic->setValue(cfg->getString(BLE_PROP_HWI_NAME).c_str());
+
+  // Device MAC
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWI_MAC, R);
+  pCharacteristic->setValue(WiFi.macAddress().c_str());
+
+  pService->start();
+
+
+  //
   // Network Service
   //
   pService = pServer->createService(BLE_SERVICE_NET);
 
   // Network Name
-  pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_NAME,
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_NAME, R|W);
   pCharacteristic->setValue(cfg->getString(BLE_PROP_NET_NAME).c_str());
+  //pCharacteristic->setCallbacks(configCallback);
+
+  // Network Password
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_PASS, W);
+  //pCharacteristic->setCallbacks(configCallback);
+
+  pService->start();
+
+
+  //
+  // Hawrdware Control
+  //
+  pService = pServer->createService(BLE_SERVICE_HWC);
+
+  // Network Name
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWC_TIMEOUT, R|W);
+  pCharacteristic->setValue(String(cfg->getInt(BLE_PROP_HWC_TIMEOUT)).c_str());
+  //pCharacteristic->setCallbacks(configCallback);
+
+  // Network Name
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWC_CONFIGURED, R|W);
+  pCharacteristic->setValue(String(cfg->isConfigured()).c_str());
+  //pCharacteristic->setCallbacks(configCallback);
+
+  // Network Name
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWC_RESTART, W);
+  //pCharacteristic->setCallbacks(configCallback);
+
+  // Network Name
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWC_RESET, W);
+  //pCharacteristic->setCallbacks(configCallback);
+
+  pService->start();
+
+
+  //
+  // Button Configuration
+  //
+  pService = pServer->createService(BLE_SERVICE_BTN);
+
+  // Button Config ID
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_BTN_ID, R|W);
+  pCharacteristic->setValue(String(selected).c_str());
+  //pCharacteristic->setCallbacks(configCallback);
+
+  // Button Config Action
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_BTN_ACTION, R|W);
+  pCharacteristic->setValue(cfg->getString("_cmd-1").c_str());
   //pCharacteristic->setCallbacks(configCallback);
 
   pService->start();

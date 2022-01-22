@@ -9,6 +9,9 @@
 
 #define A32 "Arylic32"
 
+#define CFG_CMD "_cmd-"
+#define CFG_BOOT "bootCycles"
+
 #include <Arduino.h>
 
 #include <nvs_flash.h>
@@ -23,8 +26,9 @@ class Config {
 
   public:
     Config();
-    boolean init();
+    int init();
     boolean reconfigure();
+    int getBootCycles();
     int getTimeout();
     boolean isConfigured();
     int getInt(const char* propKey);
