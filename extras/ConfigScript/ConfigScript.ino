@@ -10,6 +10,7 @@
 #define NET_NAME "network.name"
 #define NET_PASS "<passphrase>"
 #define NET_DEV "192.168.1.200"
+#define DEV_TIMEOUT 15000
 
 #include "PropKeys.h"
 
@@ -25,7 +26,8 @@ void setup() {
   conf.putString(CONF_NET_NAME, NET_NAME);
   conf.putString(CONF_NET_PASS, NET_PASS);
   conf.putString(CONF_DEV_MASTER, NET_DEV);
-  conf.putBool(CONF_CONFIGURED, false);
+  conf.putInt(CONF_DEV_TIMEOUT, DEV_TIMEOUT);
+  conf.putBool(CONF_CONFIGURED, true);
   conf.end();
 
   ESP_LOGI(A32, "Done.");

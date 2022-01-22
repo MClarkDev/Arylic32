@@ -41,6 +41,15 @@ String Config::getTargetIP() {
   return getString(BLE_PROP_WHA_MASTER);
 }
 
+int Config::getTimeout() {
+  return getInt(BLE_PROP_HWC_TIMEOUT);
+}
+
+int Config::getInt(const char* propKey) {
+  String key = String(propKey).substring(0, 8);
+  return conf->getInt(key.c_str(), -1);
+}
+
 boolean Config::getBool(const char* propKey) {
   String key = String(propKey).substring(0, 8);
   return conf->getBool(key.c_str(), false);

@@ -7,7 +7,6 @@
 #ifndef Arylic32_H
 #define Arylic32_H
 
-#define TIMEOUT 12000
 #define DELAY 25
 
 #define A32    "Arylic32"
@@ -31,6 +30,8 @@ class Arylic32 {
 
   private:
     int timeout;
+    int sleeptime;
+    boolean connected;
     Status* ledMgr;
     Wheel* encMgr;
     Buttons* btnMgr;

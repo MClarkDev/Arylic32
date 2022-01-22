@@ -7,7 +7,6 @@
  #include "Arylic32.h"
 
 Arylic32::Arylic32() {
-  timeout = TIMEOUT;
 }
 
 void Arylic32::setup() {
@@ -38,6 +37,7 @@ void Arylic32::setup() {
   encMgr = new Wheel();
   btnMgr = new Buttons();
 
+  connected = false;
   WiFi.mode(WIFI_STA);
   String ssid = cfgMgr->getWiFiSSID();
   String pass = cfgMgr->getWiFiPass();
@@ -45,11 +45,14 @@ void Arylic32::setup() {
   WiFi.begin(ssid.c_str(), pass.c_str());
 
   apiMgr = new ArylicHTTP(cfgMgr->getTargetIP());
+
+  timeout = cfgMgr->getTimeout();
+  sleeptime = timeout;
 }
 
 void Arylic32::loop() {
-  timeout -= DELAY;
-  if(timeout <= 0 ) {
+  sleeptime -= DELAY;
+  if(sleeptime <= 0 ) {
     sleep();
   }
 
@@ -59,6 +62,10 @@ void Arylic32::loop() {
     ESP_LOGD(LOGTAG, ".");
     delay(DELAY);
     return;
+  }else if(!connected) {
+    ESP_LOGI(LOGTAG, "Ready.");
+    sleeptime = timeout;
+    connected = true;
   }
 
   // load button values
@@ -69,7 +76,7 @@ void Arylic32::loop() {
   int cmd = (dir != 0) ? 98 + dir : btn;
   if (cmd > 0) {
 
-    timeout = TIMEOUT;
+    sleeptime = timeout;
     ledMgr->showCommand();
     ESP_LOGI(LOGTAG, "Command: %d", cmd);
     ESP_LOGD(LOGTAG, "Btn: %d, Enc: %d", btn, dir);
@@ -107,7 +114,7 @@ void Arylic32::loop() {
     }
   }
 
-  ledMgr->showTimeout(timeout, TIMEOUT);
+  ledMgr->showTimeout(timeout, cfgMgr->getTimeout());
   delay(DELAY);
 }
 

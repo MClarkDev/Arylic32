@@ -20,6 +20,7 @@ class Config {
 
   private:
     Preferences* conf;
+    int getInt(const char* propKey);
     boolean getBool(const char* propKey);
     String getString(const char* propKey);
 
@@ -30,6 +31,7 @@ class Config {
     String getWiFiSSID();
     String getWiFiPass();
     String getTargetIP();
+    int getTimeout();
     boolean isConfigured();
     void setIsConfigured(boolean configured);
 };
