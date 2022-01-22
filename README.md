@@ -12,7 +12,7 @@ After a period of inactivity (12 seconds), the device will go back into a deep s
 
 A rotary encoder wheel in addition to 5 directional buttons are use for device operations.
 
-Supported features:
+Button functions can be customized by the user. Default actions are listed below.
 
 - N: Play Preset #1
 - E: Next Track
@@ -52,6 +52,5 @@ To build this firmware package you must have the following dependencies installe
 
 - ESP32 Core (2.0.2)
 - ArduinoJson (6.18.5)
-- ArylicHTTP (0.0.2)
 - ESP32Encoder (0.7.0)
 

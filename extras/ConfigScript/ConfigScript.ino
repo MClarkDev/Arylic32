@@ -9,8 +9,15 @@
 
 #define NET_NAME "network.name"
 #define NET_PASS "<passphrase>"
-#define NET_DEV "192.168.1.200"
-#define DEV_TIMEOUT 15000
+#define DEV_TIMEOUT 20000
+
+#define ACTION_N  "http://10.3.106.120/httpapi.asp?command=MCUKeyShortClick:1"
+#define ACTION_E  "http://10.3.106.120/httpapi.asp?command=setPlayerCmd:next"
+#define ACTION_S  "http://10.3.106.120/httpapi.asp?command=multiroom:Ungroup"
+#define ACTION_W  "http://10.3.106.120/httpapi.asp?command=setPlayerCmd:prev"
+#define ACTION_C  "http://10.3.106.120/httpapi.asp?command=setPlayerCmd:onepause"
+#define ACTION_UP "http://10.3.106.120/httpapi.asp?command=setPlayerCmd:Vol--"
+#define ACTION_DN "http://10.3.106.120/httpapi.asp?command=setPlayerCmd:Vol%2B%2B"
 
 #include "PropKeys.h"
 
@@ -25,8 +32,14 @@ void setup() {
   conf.begin(A32, false);
   conf.putString(CONF_NET_NAME, NET_NAME);
   conf.putString(CONF_NET_PASS, NET_PASS);
-  conf.putString(CONF_DEV_MASTER, NET_DEV);
   conf.putInt(CONF_DEV_TIMEOUT, DEV_TIMEOUT);
+  conf.putString("_cmd-1", ACTION_N);
+  conf.putString("_cmd-2", ACTION_E);
+  conf.putString("_cmd-4", ACTION_S);
+  conf.putString("_cmd-8", ACTION_W);
+  conf.putString("_cmd-16", ACTION_C);
+  conf.putString("_cmd-97", ACTION_UP);
+  conf.putString("_cmd-99", ACTION_DN);
   conf.putBool(CONF_CONFIGURED, true);
   conf.end();
 

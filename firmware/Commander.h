@@ -4,7 +4,7 @@
 #define A32 "Arylic32"
 
 #include <Arduino.h>
-#include <ArylicHTTP.h>
+#include <HTTPClient.h>
 
 #include "BLEProps.h"
 #include "Config.h"
@@ -16,7 +16,7 @@ class Commander {
     Config* cfgMgr;
     Wheel* encMgr;
     Buttons* btnMgr;
-    ArylicHTTP* apiMgr;
+    String get(String url);
 
   public:
     Commander(Config* cfgMgr);

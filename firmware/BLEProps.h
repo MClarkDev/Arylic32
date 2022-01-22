@@ -19,9 +19,6 @@
 #define BLE_PROP_BTN_ID         "37ec4961-159e-4939-8423-0003d3a2a434"
 #define BLE_PROP_BTN_ACTION     "edb5c022-296f-4ef6-ab98-06eaf0146f72"
 
-#define BLE_SERVICE_WHA         "5ff643b6-5fb9-4faa-8a02-07dbf7776597"
-#define BLE_PROP_WHA_MASTER     "f73a8c7b-b9e3-4504-a180-cfa91cc53c3b"
-
 #define BLE_SERVICE_HWC         "0736ef5f-e515-4acf-a37b-ca7b8e82b069"
 #define BLE_PROP_HWC_TIMEOUT    "019e5126-62e8-4a81-a792-cefe2206d3d2"
 #define BLE_PROP_HWC_CONFIGURED "f75d106c-15cc-4e82-9b3b-d09b2bc3fe4b"

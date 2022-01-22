@@ -5,8 +5,6 @@ Commander::Commander(Config* cfgMgr) {
 
   encMgr = new Wheel();
   btnMgr = new Buttons();
-
-  apiMgr = new ArylicHTTP(cfgMgr->getString(BLE_PROP_WHA_MASTER));
 }
 
 int Commander::getButtonCommand() {
@@ -22,41 +20,20 @@ int Commander::getButtonCommand() {
 boolean Commander::executeCommand(int cmd) {
   ESP_LOGD(A32, "Running command: %d", cmd);
 
-  switch (cmd) {
-    case 1: // N
-      apiMgr->preset(1);
-      break;
-    case 2: // E
-      apiMgr->playbackNext();
-      break;
-    case 3: // NE
-      break;
-    case 4: // S
-      apiMgr->groupLeave();
-      break;
-    case 6: // SE
-      break;
-    case 8: // W
-      apiMgr->playbackPrev();
-      break;
-    case 9: // NW
-      break;
-    case 12: // SW
-      break;
-    case 16: // C
-      apiMgr->playbackTogglePlay();
-      break;
-    case 97: // Jog Down
-      apiMgr->setVolumeStepDown();
-      break;
-    case 99: // Jog Up
-      apiMgr->setVolumeStepDown();
-      break;
-    default:
-      return false;
-      break;
-  }
+  String key = "_cmd-" + String(cmd);
+  String val = cfgMgr->getString(key.c_str());
+
+  get(val);
 
   btnMgr->clearButtons();
   return true;
+}
+
+String Commander::get(String url) {
+  HTTPClient http;
+  http.begin(url.c_str());
+  http.GET();
+  String body = http.getString();
+  http.end();
+  return body;
 }
