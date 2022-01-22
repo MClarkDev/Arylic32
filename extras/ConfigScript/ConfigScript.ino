@@ -9,7 +9,9 @@
 
 #define NET_NAME "network.name"
 #define NET_PASS "<passphrase>"
-#define DEV_TIMEOUT 20000
+
+#define DEV_NAME "Remote 1"
+#define DEV_TIMEOUT 30000
 
 #define ACTION_N  "http://10.3.106.120/httpapi.asp?command=MCUKeyShortClick:1"
 #define ACTION_E  "http://10.3.106.120/httpapi.asp?command=setPlayerCmd:next"
@@ -32,6 +34,7 @@ void setup() {
   conf.begin(A32, false);
   conf.putString(CONF_NET_NAME, NET_NAME);
   conf.putString(CONF_NET_PASS, NET_PASS);
+  conf.putString(CONF_DEV_NAME, DEV_NAME);
   conf.putInt(CONF_DEV_TIMEOUT, DEV_TIMEOUT);
   conf.putString("_cmd-1", ACTION_N);
   conf.putString("_cmd-2", ACTION_E);

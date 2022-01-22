@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Commander.cpp
+ */
+
 #include "Commander.h"
 
 Commander::Commander(Config* cfgMgr) {

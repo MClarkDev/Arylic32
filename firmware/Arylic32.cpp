@@ -13,14 +13,17 @@ void Arylic32::setup() {
   ESP_LOGI(A32, "Booting...");
   ESP_LOGD(A32, "Loop time: %d", DELAY);
 
-  ledMgr = new Status();
+  // Setup config and IO
   cfgMgr = new Config();
+  ledMgr = new Status();
   cmdMgr = new Commander(cfgMgr);
 
+  // Get boot count
   int boots = cfgMgr->init();
-  ESP_LOGD(A32, "Boots: %d", boots);
+  ESP_LOGI(A32, "Boots: %d", boots);
 
   if(boots <= 0) {
+    // Device initialization
     ledMgr->showFormatting();
     ESP_LOGI(A32, "Formatting NVS...");
     if(!cfgMgr->reconfigure()) {
@@ -29,6 +32,7 @@ void Arylic32::setup() {
     }
     ESP.restart();
   }else if(!cfgMgr->isConfigured()){
+    // BLE setup mode
     ledMgr->showSetupMode();
     ESP_LOGI(A32, "Entering setup mode.");
     Setup* s = new Setup(cfgMgr);
@@ -39,6 +43,7 @@ void Arylic32::setup() {
     ESP.restart();
   }
 
+  // WiFi setup
   connected = false;
   WiFi.mode(WIFI_STA);
   String ssid = cfgMgr->getString(BLE_PROP_NET_NAME);
@@ -46,6 +51,7 @@ void Arylic32::setup() {
   ESP_LOGI(A32, "Connecting: %s", ssid);
   WiFi.begin(ssid.c_str(), pass.c_str());
 
+  // Sleep timeout setup
   timeout = cfgMgr->getInt(BLE_PROP_HWC_TIMEOUT);
   touch();
 }
@@ -82,11 +88,13 @@ void Arylic32::loop() {
   }
 }
 
+// Reset the sleep timer
 void Arylic32::touch() {
   ESP_LOGD(A32, "Resetting sleep timer.");
   sleeptime = timeout;
 }
 
+// Put the device to sleep
 void Arylic32::sleep() {
   ESP_LOGI(A32, "Going to sleep.");
   esp_sleep_enable_ext0_wakeup(PIN_DPAD_C, 0);

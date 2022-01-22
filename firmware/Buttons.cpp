@@ -19,6 +19,7 @@ Buttons::Buttons() {
   setupButton(PIN_DPAD_C, onPressC);
 }
 
+// Configure a button pin and ISR
 void Buttons::setupButton(int pin, void (*callback)(void)) {
   ESP_LOGD(A32, "Configuring button on pin %d", pin);
 
@@ -26,6 +27,7 @@ void Buttons::setupButton(int pin, void (*callback)(void)) {
   attachInterrupt(pin, callback, RISING);
 }
 
+// Reset button registers
 void Buttons::clearButtons() {
   for ( int x = 0; x < NUMBTNS; x++ ) {
     tlst[x] = millis();
@@ -34,6 +36,7 @@ void Buttons::clearButtons() {
   }
 }
 
+// Process button registers
 int Buttons::processButtons() {
   int pressed = 0;
   for ( int x = 0; x < NUMBTNS; x++ ) {
