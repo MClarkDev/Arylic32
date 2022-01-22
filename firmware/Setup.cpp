@@ -45,7 +45,7 @@ void Setup::startBLEServer() {
   // Network Name
   pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_NAME,
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
-  pCharacteristic->setValue(cfg->getWiFiSSID().c_str());
+  pCharacteristic->setValue(cfg->getString(BLE_PROP_NET_NAME).c_str());
   //pCharacteristic->setCallbacks(configCallback);
 
   pService->start();

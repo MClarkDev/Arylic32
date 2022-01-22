@@ -20,20 +20,19 @@ class Config {
 
   private:
     Preferences* conf;
-    int getInt(const char* propKey);
-    boolean getBool(const char* propKey);
-    String getString(const char* propKey);
 
   public:
     Config();
     boolean init();
     boolean reconfigure();
-    String getWiFiSSID();
-    String getWiFiPass();
-    String getTargetIP();
     int getTimeout();
     boolean isConfigured();
-    void setIsConfigured(boolean configured);
+    int getInt(const char* propKey);
+    void setInt(const char* propKey, int val);
+    boolean getBool(const char* propKey);
+    void setBool(const char* propKey, boolean val);
+    String getString(const char* propKey);
+    void setString(const char* propKey, String val);
 };
 
 #endif

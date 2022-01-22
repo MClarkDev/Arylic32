@@ -25,37 +25,30 @@ boolean Config::isConfigured() {
   return getBool(BLE_PROP_HWC_CONFIGURED);
 }
 
-void Config::setIsConfigured(boolean enabled) {
-  conf->putBool(BLE_PROP_HWC_CONFIGURED, enabled);
-}
-
-String Config::getWiFiSSID() {
-  return getString(BLE_PROP_NET_NAME);
-}
-
-String Config::getWiFiPass() {
-  return getString(BLE_PROP_NET_PASS);
-}
-
-String Config::getTargetIP() {
-  return getString(BLE_PROP_WHA_MASTER);
-}
-
-int Config::getTimeout() {
-  return getInt(BLE_PROP_HWC_TIMEOUT);
+String key(const char* propKey) {
+  return String(propKey).substring(0, 8);
 }
 
 int Config::getInt(const char* propKey) {
-  String key = String(propKey).substring(0, 8);
-  return conf->getInt(key.c_str(), -1);
+  return conf->getInt(key(propKey).c_str(), -1);
+}
+
+void Config::setInt(const char* propKey, int val) {
+  conf->putInt(key(propKey).c_str(), val);  
 }
 
 boolean Config::getBool(const char* propKey) {
-  String key = String(propKey).substring(0, 8);
-  return conf->getBool(key.c_str(), false);
+  return conf->getBool(key(propKey).c_str(), false);
+}
+
+void Config::setBool(const char* propKey, boolean val) {
+  conf->putBool(key(propKey).c_str(), val);
 }
 
 String Config::getString(const char* propKey) {
-  String key = String(propKey).substring(0, 8);
-  return conf->getString(key.c_str(), "");
+  return conf->getString(key(propKey).c_str(), "");
+}
+
+void Config::setString(const char* propKey, String val) {
+  conf->putString(key(propKey).c_str(), val);
 }

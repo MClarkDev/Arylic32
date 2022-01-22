@@ -36,13 +36,13 @@ void Arylic32::setup() {
 
   connected = false;
   WiFi.mode(WIFI_STA);
-  String ssid = cfgMgr->getWiFiSSID();
-  String pass = cfgMgr->getWiFiPass();
+  String ssid = cfgMgr->getString(BLE_PROP_NET_NAME);
+  String pass = cfgMgr->getString(BLE_PROP_NET_PASS);
   ESP_LOGI(A32, "Connecting: %s", ssid);
   WiFi.begin(ssid.c_str(), pass.c_str());
 
   cmdMgr = new Commander(cfgMgr);
-  timeout = cfgMgr->getTimeout();
+  timeout = cfgMgr->getInt(BLE_PROP_HWC_TIMEOUT);
   touch();
 }
 
@@ -69,13 +69,13 @@ void Arylic32::loop() {
     touch();
   }
 
-  // Timeout or sleep
+  // Delay the loop or enter deep sleep
   ledMgr->showTimeout(sleeptime, timeout);
-  sleeptime -= DELAY;
-  if(sleeptime <= 0 ) {
+  if((sleeptime-= DELAY) > 0 ) {
+    delay(DELAY);
+  } else {
     sleep();
   }
-  delay(DELAY);
 }
 
 void Arylic32::touch() {

@@ -6,7 +6,7 @@ Commander::Commander(Config* cfgMgr) {
   encMgr = new Wheel();
   btnMgr = new Buttons();
 
-  apiMgr = new ArylicHTTP(cfgMgr->getTargetIP());
+  apiMgr = new ArylicHTTP(cfgMgr->getString(BLE_PROP_WHA_MASTER));
 }
 
 int Commander::getButtonCommand() {

@@ -16,6 +16,7 @@
 #include <WiFi.h>
 #include <ArduinoJson.h>
 
+#include "BLEProps.h"
 #include "Config.h"
 #include "Setup.h"
 
@@ -34,7 +35,6 @@ class Arylic32 {
     Commander* cmdMgr;
     void sleep();
     void touch();
-    void playerPlayPause();
 
   public:
     Arylic32();

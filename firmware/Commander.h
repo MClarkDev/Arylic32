@@ -6,6 +6,7 @@
 #include <Arduino.h>
 #include <ArylicHTTP.h>
 
+#include "BLEProps.h"
 #include "Config.h"
 #include "Wheel.h"
 #include "Buttons.h"
