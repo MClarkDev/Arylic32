@@ -11,7 +11,6 @@
 #define BLE_PROP_HWI_NAME       "c58117ca-6a46-4af5-9b4a-809982494ee3"
 #define BLE_PROP_HWI_MAC        "aed45e7c-c72b-4da6-8090-a5c4214ab0b1"
 
-
 #define BLE_SERVICE_NET         "f27f9169-96b1-41d2-9029-89a9b890b59e"
 #define BLE_PROP_NET_NAME       "e2171fa9-3598-4d85-a864-1a46306b9967"
 #define BLE_PROP_NET_PASS       "7fd1972b-8531-4069-8667-a292cb610967"

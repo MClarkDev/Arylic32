@@ -10,7 +10,7 @@
 #define A32 "Arylic32"
 
 #define NUMBTNS 5
-#define DEBOUNCE 180
+#define DEBOUNCE 250
 
 #include <Arduino.h>
 

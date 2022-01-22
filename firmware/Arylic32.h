@@ -9,13 +9,11 @@
 
 #define DELAY 25
 
-#define A32    "Arylic32"
-#define LOGTAG "Arylic32"
+#define A32 "Arylic32"
 
 #include <Arduino.h>
 
 #include <WiFi.h>
-#include <ArylicHTTP.h>
 #include <ArduinoJson.h>
 
 #include "Config.h"
@@ -23,8 +21,7 @@
 
 #include "Pins.h"
 #include "Status.h"
-#include "Wheel.h"
-#include "Buttons.h"
+#include "Commander.h"
 
 class Arylic32 {
 
@@ -33,11 +30,10 @@ class Arylic32 {
     int sleeptime;
     boolean connected;
     Status* ledMgr;
-    Wheel* encMgr;
-    Buttons* btnMgr;
     Config* cfgMgr;
-    ArylicHTTP* apiMgr;
+    Commander* cmdMgr;
     void sleep();
+    void touch();
     void playerPlayPause();
 
   public:
