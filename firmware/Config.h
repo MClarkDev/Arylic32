@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Config.h
+ */
+
 #ifndef Config_H
 #define Config_H
 

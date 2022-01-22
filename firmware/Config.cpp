@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Config.cpp
+ */
+
 #include "Config.h"
 
 Config::Config() {
@@ -5,7 +11,9 @@ Config::Config() {
 }
 
 boolean Config::init() {
-  return conf->begin(A32, false);
+  boolean init = conf->begin(A32, false);
+  ESP_LOGD(A32, "Config loaded: %d", init);
+  return init;
 }
 
 boolean Config::reconfigure() {

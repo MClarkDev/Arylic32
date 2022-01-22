@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Wheel.cpp
+ */
+
 #include "Wheel.h"
 
 Wheel::Wheel() {

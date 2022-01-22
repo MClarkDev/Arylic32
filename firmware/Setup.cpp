@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Setup.cpp
+ */
+
 #include "Setup.h"
 
 Setup::Setup(Config* cfg) {
@@ -5,6 +11,7 @@ Setup::Setup(Config* cfg) {
 }
 
 boolean Setup::runDeviceSetup() {
+  ESP_LOGD(A32, "Beginning device setup.");
 
   startBLEServer();
 
@@ -14,14 +21,17 @@ boolean Setup::runDeviceSetup() {
       delay(250);
   }
 
-  return cfg->isConfigured();
+  boolean configured = cfg->isConfigured();
+  ESP_LOGD(A32, "System configured: %d", configured);
+  return configured;
 }
 
 void Setup::startBLEServer() {
+  ESP_LOGD(A32, "Setting up BLE...");
 
   //ConfigCallback* configCallback = new ConfigCallback();
 
-  BLEDevice::init("Arylic32");
+  BLEDevice::init(A32);
   BLEServer *pServer = BLEDevice::createServer();
 
   BLEService *pService;
@@ -41,5 +51,6 @@ void Setup::startBLEServer() {
   pService->start();
 
   // Start BLE
+  ESP_LOGD(A32, "Starting BLE config server.");
   pServer->getAdvertising()->start();
 }

@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Buttons.cpp
+ */
+
 #include "Buttons.h"
 
 int tlst[] = {0, 0, 0, 0, 0};
@@ -14,6 +20,7 @@ Buttons::Buttons() {
 }
 
 void Buttons::setupButton(int pin, void (*callback)(void)) {
+  ESP_LOGD(A32, "Configuring button on pin %d", pin);
 
   pinMode(pin, INPUT_PULLUP);
   attachInterrupt(pin, callback, RISING);

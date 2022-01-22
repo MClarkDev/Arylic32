@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Pins.h
+ */
+
 #ifndef Pins_H
 #define Pins_H
 

@@ -1,5 +1,13 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Buttons.h
+ */
+
 #ifndef Buttons_H
 #define Buttons_H
+
+#define A32 "Arylic32"
 
 #define NUMBTNS 5
 #define DEBOUNCE 180

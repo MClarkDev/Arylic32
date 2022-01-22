@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * BLEProps.h
+ */
+
 #ifndef BLE_H
 #define BLE_H
 

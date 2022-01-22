@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Status.cpp
+ */
+
 #include "Status.h"
 
 Status::Status() {
@@ -10,6 +16,8 @@ Status::Status() {
 }
 
 void Status::setupChannel(int ch, int pin) {
+  ESP_LOGD(A32, "Attaching pin %d to PWM %d", pin, ch);
+
   ledcSetup(ch, 12000, 8);
   ledcWrite(ch, 127);
 
@@ -18,6 +26,15 @@ void Status::setupChannel(int ch, int pin) {
 }
 
 void Status::setRGB(int r, int g, int b) {
+  if(r == this->r &&
+     g == this->g &&
+     b == this->b) {
+       return;
+  }
+
+  this->r = r; this->g = g; this->b = b;
+  ESP_LOGD(A32, "Setting LED to: %d:%d:%d", r, g, b);
+
   ledcWrite(CH_R, r);
   ledcWrite(CH_G, g);
   ledcWrite(CH_B, b);

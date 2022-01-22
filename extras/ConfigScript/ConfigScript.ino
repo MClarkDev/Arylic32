@@ -1,5 +1,7 @@
 /**
  * Arylic32 Config Utility
+ * MClarkDev.com, 2022
+ * ConfigScript.ino
  * 
  * 1. Run this script to configure device.
  * 2. Flash Arylic32 firmware.

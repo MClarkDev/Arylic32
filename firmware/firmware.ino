@@ -1,6 +1,7 @@
 /**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
  * firwmare.ino
- * Arylic32, 2022
  * 
  * This is the main project file loaded by the Arduino IDE which will
  * subsequently load in extra modules and start the Arylic32 runtime.

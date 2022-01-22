@@ -1,3 +1,9 @@
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Setup.h
+ */
+
 #ifndef Setup_H
 #define Setup_H
 

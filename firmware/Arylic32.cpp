@@ -1,4 +1,10 @@
-#include "Arylic32.h"
+/**
+ * Arylic32 Firmware
+ * MClarkDev.com, 2022
+ * Arylic32.cpp
+ */
+ 
+ #include "Arylic32.h"
 
 Arylic32::Arylic32() {
   timeout = TIMEOUT;
@@ -6,9 +12,9 @@ Arylic32::Arylic32() {
 
 void Arylic32::setup() {
   ESP_LOGI(LOGTAG, "Booting...");
+  ESP_LOGD(LOGTAG, "Loop time: %d", DELAY);
 
   ledMgr = new Status();
-
   cfgMgr = new Config();
   if(!cfgMgr->init()) {
     ledMgr->showFormatting();
@@ -55,6 +61,7 @@ void Arylic32::loop() {
     return;
   }
 
+  // load button values
   int btn = btnMgr->processButtons();
   int dir = encMgr->getDirection();
 
@@ -65,6 +72,7 @@ void Arylic32::loop() {
     timeout = TIMEOUT;
     ledMgr->showCommand();
     ESP_LOGI(LOGTAG, "Command: %d", cmd);
+    ESP_LOGD(LOGTAG, "Btn: %d, Enc: %d", btn, dir);
 
     switch (cmd) {
       case 1: // N
