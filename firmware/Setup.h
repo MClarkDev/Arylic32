@@ -20,7 +20,7 @@
 #include "BLEProps.h"
 #include "Config.h"
 
-class Setup {
+class Setup : public BLECharacteristicCallbacks {
   private:
     int selected;
     Config* cfg;
@@ -29,6 +29,9 @@ class Setup {
   public:
     Setup(Config* cfg);
     boolean runDeviceSetup();
+
+  protected:
+    void onWrite(BLECharacteristic *pCharacteristic) override;
 };
 
 #endif

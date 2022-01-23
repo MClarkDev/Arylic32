@@ -35,7 +35,6 @@ void setup() {
   conf.putString(CONF_NET_NAME, NET_NAME);
   conf.putString(CONF_NET_PASS, NET_PASS);
   conf.putString(CONF_DEV_NAME, DEV_NAME);
-  conf.putInt(CONF_DEV_TIMEOUT, DEV_TIMEOUT);
   conf.putString("_cmd-1", ACTION_N);
   conf.putString("_cmd-2", ACTION_E);
   conf.putString("_cmd-4", ACTION_S);
@@ -43,6 +42,8 @@ void setup() {
   conf.putString("_cmd-16", ACTION_C);
   conf.putString("_cmd-97", ACTION_UP);
   conf.putString("_cmd-99", ACTION_DN);
+  conf.putInt(CONF_DEV_TIMEOUT, DEV_TIMEOUT);
+  conf.putString(CONF_UPDATEURL, DFLT_UPDATEURL);
   conf.putBool(CONF_CONFIGURED, true);
   conf.end();
 

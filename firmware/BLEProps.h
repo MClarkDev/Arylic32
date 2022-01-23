@@ -25,4 +25,9 @@
 #define BLE_PROP_HWC_RESTART    "bc368fe8-01ef-4a42-992b-735fb58dcd69"
 #define BLE_PROP_HWC_RESET      "bcce9d9e-c2f7-4ceb-9792-e1c2cce4c5e1"
 
+#define BLE_SERVICE_FW          "b0c98477-79c3-47bc-ac06-f813569f18cb"
+#define BLE_PROP_FW_VERSION     "06b2dd13-6544-4b74-b287-6799d732ac15"
+#define BLE_PROP_FW_UPDATE      "4581cf88-e6c7-496f-8c21-4792d6699fba"
+#define BLE_PROP_FW_UPDATEURL   "1f53dbd8-8bd6-4cf9-9724-8347056fc907"
+
 #endif
