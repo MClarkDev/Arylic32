@@ -48,7 +48,7 @@ void Arylic32::setup() {
   WiFi.mode(WIFI_STA);
   String ssid = cfgMgr->getString(BLE_PROP_NET_NAME);
   String pass = cfgMgr->getString(BLE_PROP_NET_PASS);
-  ESP_LOGI(A32, "Connecting: %s", ssid);
+  ESP_LOGI(A32, "Connecting: %s", ssid.c_str());
   WiFi.begin(ssid.c_str(), pass.c_str());
 
   // Sleep timeout setup
@@ -62,8 +62,6 @@ void Arylic32::loop() {
   if(WiFi.status() != WL_CONNECTED) {
     ledMgr->showConnecting();
     ESP_LOGD(A32, ".");
-    delay(DELAY);
-    return;
   }else if(!connected) {
     ESP_LOGI(A32, "Ready.");
     connected = true;
@@ -72,7 +70,7 @@ void Arylic32::loop() {
 
   // Process buttons
   int cmd = cmdMgr->getButtonCommand();
-  if (cmd > 0) {
+  if (cmd > 0 && connected) {
     ledMgr->showCommand();
     ESP_LOGI(A32, "Command: %d", cmd);
     cmdMgr->executeCommand(cmd);
@@ -81,7 +79,7 @@ void Arylic32::loop() {
 
   // Delay the loop or enter deep sleep
   ledMgr->showTimeout(sleeptime, timeout);
-  if((sleeptime-= DELAY) > 0 ) {
+  if((sleeptime -= DELAY) > DELAY ) {
     delay(DELAY);
   } else {
     sleep();

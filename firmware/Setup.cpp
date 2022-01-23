@@ -47,8 +47,9 @@ void Setup::startBLEServer() {
   pService = pServer->createService(BLE_SERVICE_HWI);
 
   // Device Name
-  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWI_NAME, R);
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_HWI_NAME, R|W);
   pCharacteristic->setValue(cfg->getString(BLE_PROP_HWI_NAME).c_str());
+  pCharacteristic->setCallbacks(this);
 
   // Device MAC
   pCharacteristic = pService->createCharacteristic(BLE_PROP_HWI_MAC, R);
@@ -68,7 +69,8 @@ void Setup::startBLEServer() {
   pCharacteristic->setCallbacks(this);
 
   // Network Password
-  pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_PASS, W);
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_PASS, R|W);
+  pCharacteristic->setValue(cfg->getString(BLE_PROP_NET_PASS).c_str());
   pCharacteristic->setCallbacks(this);
 
   pService->start();
@@ -139,12 +141,66 @@ void Setup::startBLEServer() {
   pService->start();
 
   // Start BLE
-  ESP_LOGD(A32, "Starting BLE config server.");
+  ESP_LOGI(A32, "Starting BLE config server.");
   pServer->getAdvertising()->start();
 }
 
+int lastT = 0;
+std::string lastK = "";
+boolean continued = false;
+
 void Setup::onWrite(BLECharacteristic *pCharacteristic) {
-  const char* key = pCharacteristic->getUUID().toString().c_str();
-  const char* val = pCharacteristic->getValue().c_str();
-  ESP_LOGD(TAG, "Got BLE Value: [ %s : %s ]", key, val);
+  std::string key = pCharacteristic->getUUID().toString();
+  std::string val = pCharacteristic->getValue();
+  ESP_LOGI(TAG, "Got BLE value: [ %s : %s ]", key.c_str(), val.c_str());
+  continued = (key == lastK) && (millis() < lastT + 750);
+  lastT = millis();
+  lastK = key;
+
+  if(key == BLE_PROP_HWC_CONFIGURED) {
+    boolean conf = String(val.c_str()).toInt() > 0;
+    ESP_LOGI(A32, "Set configured: %d", conf);
+    cfg->setBool(BLE_PROP_HWC_CONFIGURED, conf);
+    return;
+  }
+
+  if(key == BLE_PROP_HWC_RESTART) {
+    ESP_LOGI(A32, "BLE Requested restart.");
+    ESP.restart();
+    return;
+  }
+
+  if(key == BLE_PROP_HWC_RESET) {
+    ESP_LOGI(A32, "BLE Requested reset.");
+    cfg->reconfigure();
+    ESP.restart();
+    return;
+  }
+
+  if(key == BLE_PROP_FW_UPDATE) {
+    ESP_LOGI(A32, "BLE Requested software update.");
+    return;
+  }
+
+  if(key == BLE_PROP_BTN_ID) {
+    selected = String(val.c_str()).toInt();
+    return;
+  }
+
+  if(key == BLE_PROP_BTN_ACTION) {
+    String cmd = "_cmd-" + String(selected);
+    if(continued){
+      val.insert(0, cfg->getString(cmd.c_str()).c_str());
+    }
+
+    ESP_LOGI(A32, "Updating action: %d -> %s", selected, val.c_str());
+    cfg->setString(cmd.c_str(), val.c_str());
+    return;
+  }
+
+  ESP_LOGD(A32, "Updating: %s", cfg->key(key.c_str())); 
+  if(continued){
+    val.insert(0, cfg->getString(key.c_str()).c_str());
+  }
+  cfg->setString(key.c_str(), val.c_str());
 }

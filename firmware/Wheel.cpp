@@ -12,6 +12,10 @@ Wheel::Wheel() {
   wheel.setCount(0);
 }
 
+/**
+ * Get the direction of the encorder wheel
+ * Return +1, 0, -1
+ */
 int Wheel::getDirection() {
   int dir = 0;
   int count = wheel.getCount();

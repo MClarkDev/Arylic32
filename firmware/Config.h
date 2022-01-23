@@ -37,6 +37,7 @@ class Config {
     void setBool(const char* propKey, boolean val);
     String getString(const char* propKey);
     void setString(const char* propKey, String val);
+    String key(const char* propKey);
 };
 
 #endif

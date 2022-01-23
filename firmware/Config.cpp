@@ -24,6 +24,7 @@ int Config::init() {
 }
 
 boolean Config::reconfigure() {
+  nvs_flash_erase();
   nvs_flash_init();
   return true;
 }
@@ -36,7 +37,7 @@ boolean Config::isConfigured() {
   return getBool(BLE_PROP_HWC_CONFIGURED);
 }
 
-String key(const char* propKey) {
+String Config::key(const char* propKey) {
   return String(propKey).substring(0, 8);
 }
 
