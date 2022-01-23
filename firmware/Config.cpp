@@ -19,6 +19,13 @@ int Config::init() {
     return 0;
   }
 
+  // Toggle setup mode
+  pinMode(PIN_SETUP, INPUT_PULLUP);
+  if(!digitalRead(PIN_SETUP)){
+    ESP_LOGD(A32, "Toggle setup mode.");
+    setBool(BLE_PROP_HWC_CONFIGURED, !isConfigured());
+  }
+
   conf->putInt(CFG_BOOT, (getBootCycles() + 1));
   return getBootCycles();
 }

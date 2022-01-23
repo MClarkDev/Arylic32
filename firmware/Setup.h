@@ -22,8 +22,11 @@
 
 class Setup : public BLECharacteristicCallbacks {
   private:
-    int selected;
     Config* cfg;
+    int lastT = 0;
+    std::string lastK;
+    boolean continued;
+    int selectedButton;
     void startBLEServer();
 
   public:

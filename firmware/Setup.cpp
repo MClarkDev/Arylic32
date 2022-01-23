@@ -8,7 +8,11 @@
 
 Setup::Setup(Config* cfg) {
   this->cfg = cfg;
-  this->selected = 1;
+
+  lastT = 0;
+  lastK = "";
+  continued = false;
+  selectedButton = 1;
 }
 
 boolean Setup::runDeviceSetup() {
@@ -69,8 +73,7 @@ void Setup::startBLEServer() {
   pCharacteristic->setCallbacks(this);
 
   // Network Password
-  pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_PASS, R|W);
-  pCharacteristic->setValue(cfg->getString(BLE_PROP_NET_PASS).c_str());
+  pCharacteristic = pService->createCharacteristic(BLE_PROP_NET_PASS, W);
   pCharacteristic->setCallbacks(this);
 
   pService->start();
@@ -130,7 +133,7 @@ void Setup::startBLEServer() {
 
   // Button Config ID
   pCharacteristic = pService->createCharacteristic(BLE_PROP_BTN_ID, R|W);
-  pCharacteristic->setValue(String(selected).c_str());
+  pCharacteristic->setValue(String(selectedButton).c_str());
   pCharacteristic->setCallbacks(this);
 
   // Button Config Action
@@ -144,10 +147,6 @@ void Setup::startBLEServer() {
   ESP_LOGI(A32, "Starting BLE config server.");
   pServer->getAdvertising()->start();
 }
-
-int lastT = 0;
-std::string lastK = "";
-boolean continued = false;
 
 void Setup::onWrite(BLECharacteristic *pCharacteristic) {
   std::string key = pCharacteristic->getUUID().toString();
@@ -183,17 +182,17 @@ void Setup::onWrite(BLECharacteristic *pCharacteristic) {
   }
 
   if(key == BLE_PROP_BTN_ID) {
-    selected = String(val.c_str()).toInt();
+    selectedButton = String(val.c_str()).toInt();
     return;
   }
 
   if(key == BLE_PROP_BTN_ACTION) {
-    String cmd = "_cmd-" + String(selected);
+    String cmd = "_cmd-" + String(selectedButton);
     if(continued){
       val.insert(0, cfg->getString(cmd.c_str()).c_str());
     }
 
-    ESP_LOGI(A32, "Updating action: %d -> %s", selected, val.c_str());
+    ESP_LOGI(A32, "Updating action: %d -> %s", selectedButton, val.c_str());
     cfg->setString(cmd.c_str(), val.c_str());
     return;
   }

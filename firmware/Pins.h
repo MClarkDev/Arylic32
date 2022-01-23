@@ -7,6 +7,8 @@
 #ifndef Pins_H
 #define Pins_H
 
+#define PIN_SETUP  GPIO_NUM_12
+
 #define PIN_DPAD_N GPIO_NUM_32
 #define PIN_DPAD_E GPIO_NUM_25
 #define PIN_DPAD_S GPIO_NUM_33

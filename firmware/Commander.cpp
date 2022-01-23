@@ -27,9 +27,14 @@ boolean Commander::executeCommand(int cmd) {
   ESP_LOGD(A32, "Running command: %d", cmd);
 
   String key = "_cmd-" + String(cmd);
-  String val = cfgMgr->getString(key.c_str());
+  String act = cfgMgr->getString(key.c_str());
 
-  get(val);
+  if(act.c_str() == "") {
+    ESP_LOGW(A32, "Action not configured.");
+    return false;
+  }
+
+  get(act);
 
   btnMgr->clearButtons();
   return true;
@@ -38,7 +43,12 @@ boolean Commander::executeCommand(int cmd) {
 String Commander::get(String url) {
   HTTPClient http;
   http.begin(url.c_str());
-  http.GET();
+  int code = http.GET();
+  if(code <= 0) {
+    ESP_LOGI(A32, "API Error: %d", code);
+    return "";
+  }
+
   String body = http.getString();
   http.end();
   return body;

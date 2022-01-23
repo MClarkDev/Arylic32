@@ -17,6 +17,7 @@
 #include <nvs_flash.h>
 #include <Preferences.h>
 
+#include "Pins.h"
 #include "BLEProps.h"
 
 class Config {
