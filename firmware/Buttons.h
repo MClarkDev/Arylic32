@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Buttons.h
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Buttons.h
+*/
 
 #ifndef Buttons_H
 #define Buttons_H
@@ -13,12 +13,13 @@
 #define DEBOUNCE 250
 
 #include <Arduino.h>
+#include <driver/rtc_io.h>
 
 #include "Pins.h"
 
 class Buttons {
   private:
-    void setupButton(int pin, void (*callback)(void));
+    void setupButton(gpio_num_t pin, void (*callback)(void));
 
   public:
     Buttons();

@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Arylic32.h
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Arylic32.h
+*/
 
 #ifndef Arylic32_H
 #define Arylic32_H

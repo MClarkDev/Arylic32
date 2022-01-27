@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Setup.h
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Setup.h
+*/
 
 #ifndef Setup_H
 #define Setup_H
@@ -19,8 +19,9 @@
 
 #include "BLEProps.h"
 #include "Config.h"
+#include "Updater.h"
 
-class Setup : public BLECharacteristicCallbacks {
+class Setup : public BLEServerCallbacks, BLECharacteristicCallbacks {
   private:
     Config* cfg;
     int lastT = 0;
@@ -35,6 +36,8 @@ class Setup : public BLECharacteristicCallbacks {
 
   protected:
     void onWrite(BLECharacteristic *pCharacteristic) override;
+    void onConnect(BLEServer* pServer) override;
+    void onDisconnect(BLEServer* pServer) override;
 };
 
 #endif

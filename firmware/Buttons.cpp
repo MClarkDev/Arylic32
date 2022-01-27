@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Buttons.cpp
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Buttons.cpp
+*/
 
 #include "Buttons.h"
 
@@ -20,11 +20,12 @@ Buttons::Buttons() {
 }
 
 // Configure a button pin and ISR
-void Buttons::setupButton(int pin, void (*callback)(void)) {
+void Buttons::setupButton(gpio_num_t pin, void (*callback)(void)) {
   ESP_LOGD(A32, "Configuring button on pin %d", pin);
 
-  pinMode(pin, INPUT_PULLUP);
-  attachInterrupt(pin, callback, RISING);
+  rtc_gpio_deinit(pin);
+  pinMode(pin, INPUT_PULLDOWN);
+  attachInterrupt(pin, callback, FALLING);
 }
 
 // Reset button registers
@@ -40,13 +41,13 @@ void Buttons::clearButtons() {
 int Buttons::processButtons() {
   int pressed = 0;
   for ( int x = 0; x < NUMBTNS; x++ ) {
-    if(cur[x] == lst[x]) {
+    if (cur[x] == lst[x]) {
       cur[x] = false;
       continue;
     }
 
     lst[x] = cur[x];
-    if((millis() - tlst[x]) > DEBOUNCE) {
+    if ((millis() - tlst[x]) > DEBOUNCE) {
       tlst[x] = millis();
       pressed += pow(2, x);
     }

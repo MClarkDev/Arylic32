@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Commander.cpp
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Commander.cpp
+*/
 
 #include "Commander.h"
 
@@ -29,7 +29,7 @@ boolean Commander::executeCommand(int cmd) {
   String key = "_cmd-" + String(cmd);
   String act = cfgMgr->getString(key.c_str());
 
-  if(act.c_str() == "") {
+  if (act.c_str() == "") {
     ESP_LOGW(A32, "Action not configured.");
     return false;
   }
@@ -44,7 +44,7 @@ String Commander::get(String url) {
   HTTPClient http;
   http.begin(url.c_str());
   int code = http.GET();
-  if(code <= 0) {
+  if (code <= 0) {
     ESP_LOGI(A32, "API Error: %d", code);
     return "";
   }

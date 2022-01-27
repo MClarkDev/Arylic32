@@ -14,6 +14,6 @@
 #define CONF_CONFIGURED  "f75d106c"
 
 #define CONF_UPDATEURL   "1f53dbd8"
-#define DFLT_UPDATEURL   "https://files.mclarkdev.com/uploads/artifacts/Arylic32/live.bin"
+#define DFLT_UPDATEURL   "https://files.mclarkdev.com/uploads/Default.ino.esp32.bin"
 
 #endif

@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Status.cpp
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Status.cpp
+*/
 
 #include "Status.h"
 
@@ -26,10 +26,10 @@ void Status::setupChannel(int ch, int pin) {
 }
 
 void Status::setRGB(int r, int g, int b) {
-  if(r == this->r &&
-     g == this->g &&
-     b == this->b) {
-       return;
+  if (r == this->r &&
+      g == this->g &&
+      b == this->b) {
+    return;
   }
 
   this->r = r; this->g = g; this->b = b;
@@ -49,7 +49,7 @@ void Status::showSetupMode() {
 }
 
 void Status::showConnecting() {
- setRGB(50, 50, 50);
+  setRGB(50, 50, 50);
 }
 
 void Status::showCommand() {

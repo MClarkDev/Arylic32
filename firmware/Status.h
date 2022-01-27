@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Status.h
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Status.h
+*/
 
 #ifndef Status_H
 #define Status_H

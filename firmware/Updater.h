@@ -3,9 +3,19 @@
 
 #include <Arduino.h>
 
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <HTTPUpdate.h>
+
+#include "Config.h"
+
 class Updater {
+  private:
+    Config* cfg;
+    WiFiClient client;
+
   public:
-    Updater();
+    Updater(Config* cfg);
     void beginUpdate();
 };
 

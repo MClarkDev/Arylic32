@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Config.cpp
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Config.cpp
+*/
 
 #include "Config.h"
 
@@ -14,14 +14,14 @@ int Config::init() {
   boolean init = conf->begin(A32, false);
   ESP_LOGD(A32, "Config loaded: %d", init);
 
-  if(!init) {
+  if (!init) {
     ESP_LOGW(A32, "Failed to initialize NVS.");
     return 0;
   }
 
   // Toggle setup mode
-  pinMode(PIN_SETUP, INPUT_PULLUP);
-  if(!digitalRead(PIN_SETUP)){
+  pinMode(PIN_SETUP, INPUT_PULLDOWN);
+  if (digitalRead(PIN_SETUP)) {
     ESP_LOGD(A32, "Toggle setup mode.");
     setBool(BLE_PROP_HWC_CONFIGURED, !isConfigured());
   }
@@ -53,7 +53,7 @@ int Config::getInt(const char* propKey) {
 }
 
 void Config::setInt(const char* propKey, int val) {
-  conf->putInt(key(propKey).c_str(), val);  
+  conf->putInt(key(propKey).c_str(), val);
 }
 
 boolean Config::getBool(const char* propKey) {

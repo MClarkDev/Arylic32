@@ -1,8 +1,8 @@
 /**
- * Arylic32 Firmware
- * MClarkDev.com, 2022
- * Pins.h
- */
+   Arylic32 Firmware
+   MClarkDev.com, 2022
+   Pins.h
+*/
 
 #ifndef Pins_H
 #define Pins_H
@@ -21,5 +21,8 @@
 #define PIN_LED_R GPIO_NUM_4
 #define PIN_LED_G GPIO_NUM_5
 #define PIN_LED_B GPIO_NUM_2
+
+// PinMask for NESWC
+#define PIN_WAKE_MASK 0x30E000000
 
 #endif
